@@ -1,8 +1,9 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    anthropic_api_key: str
-    embedding_model: str = "intfloat/multilingual-e5-large"
+    openai_api_key: str
+    embedding_model: str = "intfloat/multilingual-e5-base"
+    chat_model: str = "gpt-4o-mini"
     correction_priority: float = 10.0
     data_dir: str = "data"
 

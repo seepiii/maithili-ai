@@ -6,7 +6,7 @@ _model: SentenceTransformer | None = None
 def _get_model() -> SentenceTransformer:
     global _model
     if _model is None:
-        print(f"Loading embedding model {settings.embedding_model} (downloads ~2GB on first run)...")
+        print(f"Loading embedding model {settings.embedding_model} (downloads on first run)...")
         _model = SentenceTransformer(settings.embedding_model)
         print("Model loaded.")
     return _model

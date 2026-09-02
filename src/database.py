@@ -26,6 +26,7 @@ def init_db():
                 wrong_response TEXT NOT NULL,
                 correct_response TEXT NOT NULL,
                 corrected_by TEXT NOT NULL,
+                explanation TEXT,
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             );
 
@@ -38,3 +39,7 @@ def init_db():
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             );
         """)
+        try:
+            conn.execute("ALTER TABLE corrections ADD COLUMN explanation TEXT")
+        except sqlite3.OperationalError:
+            pass

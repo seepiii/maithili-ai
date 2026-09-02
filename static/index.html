@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maithili AI</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">&gt;_</span>
+      <span>maithili-ai</span>
+    </div>
+    <div class="who">
+      <label for="name-input">your name</label>
+      <input id="name-input" type="text" placeholder="e.g. bua" autocomplete="off">
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h1>Translate</h1>
+      <p class="hint">Type a sentence in English. Output is romanized Maithili — no Devanagari.</p>
+      <form id="translate-form" class="translate-form">
+        <textarea id="query-input" placeholder="e.g. where do you live?" rows="2" required></textarea>
+        <button type="submit" id="translate-btn">Translate</button>
+      </form>
+      <div id="results" class="results"></div>
+    </section>
+
+    <section class="panel">
+      <h1>Teach it a phrase</h1>
+      <p class="hint">Add a Maithili phrase directly, outside of any translation. It gets embedded and joins retrieval like any other source.</p>
+      <form id="contribute-form" class="contribute-form">
+        <input id="contrib-maithili" type="text" placeholder="Maithili (romanized or Devanagari)" required>
+        <input id="contrib-english" type="text" placeholder="English meaning (optional)">
+        <button type="submit" id="contribute-btn">Add</button>
+      </form>
+      <div id="contribute-status" class="status-line"></div>
+    </section>
+
+    <section class="panel">
+      <h1>Training log</h1>
+      <p class="hint">Every correction and contribution that has been taught to the model, newest first.</p>
+      <div id="log-list" class="log-list">
+        <p class="log-empty">Loading...</p>
+      </div>
+    </section>
+  </main>
+
+  <template id="log-correction-template">
+    <article class="log-entry log-correction">
+      <div class="log-meta">
+        <span class="log-kind">correction</span>
+        <span class="log-by"></span>
+        <span class="log-when"></span>
+      </div>
+      <div class="log-query"></div>
+      <div class="log-diff">
+        <span class="log-wrong"></span>
+        <span class="log-arrow">&#8594;</span>
+        <span class="log-correct"></span>
+      </div>
+      <div class="log-explanation"></div>
+    </article>
+  </template>
+
+  <template id="log-contribution-template">
+    <article class="log-entry log-contribution">
+      <div class="log-meta">
+        <span class="log-kind">contribution</span>
+        <span class="log-by"></span>
+        <span class="log-when"></span>
+      </div>
+      <div class="log-phrase"></div>
+      <div class="log-phrase-english"></div>
+    </article>
+  </template>
+
+  <template id="result-template">
+    <article class="result-card">
+      <div class="query"></div>
+      <div class="answer-row">
+        <div class="answer"></div>
+        <button class="correct-toggle" type="button">correct this</button>
+      </div>
+
+      <form class="correct-form" hidden>
+        <textarea class="correct-input" placeholder="correct romanized Maithili" rows="2" required></textarea>
+        <div class="correct-actions">
+          <button type="submit" class="correct-submit">save correction</button>
+          <button type="button" class="correct-cancel">cancel</button>
+        </div>
+      </form>
+      <div class="correction-result" hidden></div>
+
+      <details class="trace">
+        <summary></summary>
+        <ul class="trace-list"></ul>
+      </details>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

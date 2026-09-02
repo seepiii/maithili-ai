@@ -25,4 +25,14 @@ def chat(req: ChatRequest):
         "response": result["response"],
         "conversation_id": conv_id,
         "retrieved_doc_ids": result["retrieved_doc_ids"],
+        "retrieved_docs": [
+            {
+                "type": doc["type"],
+                "source": doc["source"],
+                "priority": doc["priority"],
+                "similarity": doc["similarity"],
+                "content": doc["content"],
+            }
+            for doc in result["retrieved_docs"]
+        ],
     }

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from src.database import get_db
 from src.vector_store import insert_document
 from src.embeddings import get_passage_embedding
+from src.chat import explain_correction
 from src.config import settings
 
 router = APIRouter()
@@ -23,9 +24,10 @@ def submit_correction(req: CorrectRequest):
             raise HTTPException(status_code=404, detail="Conversation not found")
 
         corr_id = str(uuid.uuid4())
+        explanation = explain_correction(conv["response"], req.correct_response)
         db.execute(
-            "INSERT INTO corrections (id, conversation_id, wrong_response, correct_response, corrected_by) VALUES (?, ?, ?, ?, ?)",
-            (corr_id, req.conversation_id, conv["response"], req.correct_response, req.corrected_by),
+            "INSERT INTO corrections (id, conversation_id, wrong_response, correct_response, corrected_by, explanation) VALUES (?, ?, ?, ?, ?, ?)",
+            (corr_id, req.conversation_id, conv["response"], req.correct_response, req.corrected_by, explanation),
         )
 
     embedding = get_passage_embedding(req.correct_response)
@@ -38,12 +40,17 @@ def submit_correction(req: CorrectRequest):
         metadata={"conversation_id": req.conversation_id, "correction_id": corr_id},
     )
 
-    return {"correction_id": corr_id}
+    return {"correction_id": corr_id, "explanation": explanation}
 
 @router.get("/corrections")
 def list_corrections():
     with get_db() as db:
         rows = db.execute(
-            "SELECT * FROM corrections ORDER BY created_at DESC"
+            """
+            SELECT corrections.*, conversations.query AS original_query
+            FROM corrections
+            JOIN conversations ON conversations.id = corrections.conversation_id
+            ORDER BY corrections.created_at DESC
+            """
         ).fetchall()
     return [dict(r) for r in rows]
