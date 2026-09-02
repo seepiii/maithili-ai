@@ -14,8 +14,7 @@ FastAPI backend that makes an LLM fluent in Maithili (मैथिली) using 
 
 - FastAPI + SQLite (conversations, corrections, contributions)
 - ChromaDB at `data/chroma/` (local vector store, no cloud needed)
-- `intfloat/multilingual-e5-base` for embeddings (downloads ~1.1GB on first use)
-- OpenAI API (`gpt-4o-mini`) for chat
+- OpenAI API for chat (`gpt-4o-mini`) and embeddings (`text-embedding-3-small`) — no local ML model, keeps the deploy footprint small
 
 ## Run it
 
@@ -81,7 +80,7 @@ src/
   main.py          — app entry point, inits SQLite on startup
   config.py        — settings from .env
   database.py      — SQLite (conversations, corrections, contributions)
-  embeddings.py    — embedding model wrapper (query/passage prefixes)
+  embeddings.py    — OpenAI embeddings wrapper
   vector_store.py  — ChromaDB insert + priority-weighted search
   rag.py           — embed query → search → format context
   chat.py          — OpenAI API + RAG context injection

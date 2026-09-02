@@ -42,8 +42,7 @@ RAG + corrections is the permanent mechanism here, not a stopgap.
 - **FastAPI** + **SQLite** — conversations, corrections, contributions
 - **ChromaDB** (local, no cloud) — vector store for retrieval, at
   `data/chroma/`
-- **`intfloat/multilingual-e5-base`** — multilingual embedding model
-- **OpenAI API** (`gpt-4o-mini`) — translation + correction explanations
+- **OpenAI API** — `gpt-4o-mini` for translation + correction explanations, `text-embedding-3-small` for embeddings (no local ML model, keeps installs and RAM small enough for free hosting)
 - Static HTML/CSS/JS frontend, no build step, served directly by FastAPI
 
 ## Run it
