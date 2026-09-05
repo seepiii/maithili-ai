@@ -5,8 +5,14 @@ the language spoken in the Mithila region of Bihar, India and Nepal — by
 combining retrieval-augmented generation with corrections from actual
 native speakers in the family.
 
-**Live locally at:** `http://localhost:8000` (see [Run it](#run-it) — no
-hosted deployment, this runs on your own machine)
+**Live at:** [maithili-ai.onrender.com](https://maithili-ai.onrender.com)
+
+Running on Render's free tier — the first request after a period of
+inactivity can take 30-60s to wake up. It also has no persistent disk,
+so corrections/contributions made on the live site reset whenever the
+instance restarts or sleeps. For anything meant to stick, run it locally
+(see [Run it](#run-it)) where the SQLite/ChromaDB data actually persists
+between runs.
 
 ## The idea
 
